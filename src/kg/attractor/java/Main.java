@@ -6,6 +6,7 @@ package kg.attractor.java;
 
  import java.util.ArrayList;
  import java.util.List;
+ import java.util.Objects;
 
  import static java.util.stream.Collectors.*;
  import static java.util.Comparator.*;
@@ -44,8 +45,11 @@ public class Main {
 //            System.out.print("Общая сумма всех заказов : "+allOrdersSum);
 
         var emailAddressesOfCustomers = orders.stream().map(e -> e.getCustomer().getEmail()).distinct().collect(toList());
-        emailAddressesOfCustomers.forEach(System.out::println);
+//        emailAddressesOfCustomers.forEach(System.out::println);
 
+        var getCustomer= orders.stream().distinct().collect(groupingBy(e-> e.getCustomer().getFullName() , mapping(Order::getItems,toList())));
+        getCustomer.forEach((k,v)->System.out.printf("%s - %2s",k,v+"\n"+""+"\n"));
+//        System.out.println(getCustomer);
         // протестировать ваши методы вы можете как раз в  этом файле (или в любом другом, в котором вам будет удобно)
     }
 }
