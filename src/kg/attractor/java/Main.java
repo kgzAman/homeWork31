@@ -39,6 +39,11 @@ public class Main {
 //
         var deliveryToHomeMin = orders.stream().filter(Order::isHomeDelivery).min(comparing(Order::getTotal)).get();
 //        System.out.println(deliveryToHomeMin);
+        var maxOrderTotal= orders.stream().sorted(comparing(Order::getTotal).reversed()).skip(1).collect(toList());
+//        maxOrderTotal.forEach(System.out::print);
+
+        var minOrderTotal = orders.stream().sorted(comparing(Order::getTotal)).skip(1).collect(toList());
+        minOrderTotal.forEach(System.out::print);
 
         var allOrdersSum = orders.stream().flatMap(e -> e.getItems().stream()).mapToDouble(e -> e.getPrice()).sum();
 //            System.out.print("Общая сумма всех заказов : "+allOrdersSum);
@@ -60,7 +65,7 @@ public class Main {
 //        System.out.println(getCustomerWithMinTotalPrice);
 
         var getAllOrderedItems = orders.stream().map(e->e.getItems().stream().collect(groupingBy(Item::getName,counting())));
-        getAllOrderedItems.forEach(System.out::println);
+//        getAllOrderedItems.forEach(System.out::println);
         // протестировать ваши методы вы можете как раз в  этом файле (или в любом другом, в котором вам будет удобно)
     }
 }
