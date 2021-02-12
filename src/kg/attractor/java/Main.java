@@ -1,11 +1,14 @@
 package kg.attractor.java;
 
  import kg.attractor.java.homework.RestaurantOrders;
+ import kg.attractor.java.homework.domain.Customer;
  import kg.attractor.java.homework.domain.Item;
  import kg.attractor.java.homework.domain.Order;
 
+ import java.awt.*;
  import java.util.ArrayList;
  import java.util.List;
+ import java.util.Map;
  import java.util.Objects;
 
  import static java.util.stream.Collectors.*;
@@ -25,31 +28,40 @@ public class Main {
         // это для домашки
         // выберите любое количество заказов, какое вам нравится.
 
-        var orders = RestaurantOrders.read("orders_100.json").getOrders();
+        List<Order> orders = RestaurantOrders.read("orders_100.json").getOrders();
         //var orders = RestaurantOrders.read("orders_1000.json").getOrders();
         //var orders = RestaurantOrders.read("orders_10_000.json").getOrders();
 
 
-//        var maxPrices = orders.stream().sorted(comparing(Order::getTotal).reversed()).limit(6).collect(toList());
+        var maxPrices = orders.stream().sorted(comparing(Order::getTotal).reversed()).limit(6).collect(toList());
 //        maxPrices.forEach(System.out::println);
 
-//        var minTotalPrice = orders.stream().sorted(comparing(Order::getTotal)).limit(6).collect(toList());
+        var minTotalPrice = orders.stream().sorted(comparing(Order::getTotal)).limit(6).collect(toList());
 //        minTotalPrice.forEach(System.out::println);
-//        var deliveryToHomeMax = orders.stream().filter(Order::isHomeDelivery).max(comparing(Order::getTotal)).get();
+        var deliveryToHomeMax = orders.stream().filter(Order::isHomeDelivery).max(comparing(Order::getTotal)).get();
 //        System.out.println(deliveryToHomeMax);
 //
-//        var deliveryToHomeMin = orders.stream().filter(Order::isHomeDelivery).min(comparing(Order::getTotal)).get();
+        var deliveryToHomeMin = orders.stream().filter(Order::isHomeDelivery).min(comparing(Order::getTotal)).get();
 //        System.out.println(deliveryToHomeMin);
 
-//          var allOrdersSum = orders.stream().flatMap(e -> e.getItems().stream()).mapToDouble(e -> e.getPrice()).sum();
+        var allOrdersSum = orders.stream().flatMap(e -> e.getItems().stream()).mapToDouble(e -> e.getPrice()).sum();
 //            System.out.print("Общая сумма всех заказов : "+allOrdersSum);
 
         var emailAddressesOfCustomers = orders.stream().map(e -> e.getCustomer().getEmail()).distinct().collect(toList());
 //        emailAddressesOfCustomers.forEach(System.out::println);
 
         var getCustomer= orders.stream().distinct().collect(groupingBy(e-> e.getCustomer().getFullName() , mapping(Order::getItems,toList())));
-        getCustomer.forEach((k,v)->System.out.printf("%s - %2s",k,v+"\n"+""+"\n"));
+//        getCustomer.forEach((k,v)->System.out.printf("%s - %2s",k,v+"\n"+""+"\n"));
 //        System.out.println(getCustomer);
+
+        var getCustomerTotalOrdersPrices = orders.stream().collect(groupingBy(e->e.getCustomer().getFullName(),summingDouble(Order::getTotal)));
+//        getCustomerTotalOrdersPrices.forEach((k,v)->System.out.printf("%s - %2s",k,v+"\n"+""+"\n"));
+
+        var getCustomerWithMaxTotalPrice = orders.stream().max(comparing(Order::getTotal)).get();
+//        System.out.println(getCustomerWithMaxTotalPrice);
+
+        var getCustomerWithMinTotalPrice = orders.stream().min(comparing(Order::getTotal)).get();
+//        System.out.println(getCustomerWithMinTotalPrice);
         // протестировать ваши методы вы можете как раз в  этом файле (или в любом другом, в котором вам будет удобно)
     }
 }

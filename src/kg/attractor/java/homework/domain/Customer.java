@@ -45,7 +45,6 @@ public class Customer {
     public String toString() {
         return "Customer{" +
                 "fullName='" + fullName + '\'' +
-                ", email='" + email + "\n" +
-                '}';
+                ", email='" + email +     '}';
     }
 }

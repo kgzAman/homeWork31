@@ -58,16 +58,13 @@ public class Order {
 
     public  void calculateTotal() { total = items.stream().mapToDouble(e -> e.getPrice()*e.getAmount()).sum();
     }
-    public String customerEmail(Customer c){
-        return c.getEmail();
-    }
 
 
     @Override
     public String toString() {
         return "Order" + "\n"+"{" +
                 "customer=" + customer +"\n"
-                + items +
+                + items +"\n"+
                 ", homeDelivery=" + homeDelivery +
                 ", total=" + total+
                 '}'+"\n";
