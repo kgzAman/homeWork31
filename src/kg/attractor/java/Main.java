@@ -1,15 +1,11 @@
 package kg.attractor.java;
 
  import kg.attractor.java.homework.RestaurantOrders;
- import kg.attractor.java.homework.domain.Customer;
  import kg.attractor.java.homework.domain.Item;
  import kg.attractor.java.homework.domain.Order;
 
- import java.awt.*;
- import java.util.ArrayList;
  import java.util.List;
- import java.util.Map;
- import java.util.Objects;
+
 
  import static java.util.stream.Collectors.*;
  import static java.util.Comparator.*;
@@ -62,6 +58,9 @@ public class Main {
 
         var getCustomerWithMinTotalPrice = orders.stream().min(comparing(Order::getTotal)).get();
 //        System.out.println(getCustomerWithMinTotalPrice);
+
+        var getAllOrderedItems = orders.stream().map(e->e.getItems().stream().collect(groupingBy(Item::getName,counting())));
+        getAllOrderedItems.forEach(System.out::println);
         // протестировать ваши методы вы можете как раз в  этом файле (или в любом другом, в котором вам будет удобно)
     }
 }

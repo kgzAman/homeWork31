@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.*;
 
 
 public class Order {
